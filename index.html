@@ -33,7 +33,7 @@ margin-bottom:20px;
 }
 label{
 display:block;
-margin-top:10px;
+margin-top:12px;
 }
 input,select{
 width:100%;
@@ -43,7 +43,7 @@ border-radius:5px;
 border:none;
 }
 button{
-margin-top:15px;
+margin-top:18px;
 padding:12px;
 width:100%;
 background:gold;
@@ -53,9 +53,9 @@ font-weight:bold;
 cursor:pointer;
 }
 .price{
-margin-top:10px;
-font-size:18px;
-color:#0f0;
+margin-top:15px;
+font-size:20px;
+color:#00ff88;
 }
 .whatsapp{
 position:fixed;
@@ -88,80 +88,5 @@ color:#777;
 <h2>شراء الموارد</h2>
 
 <label>اختر المورد</label>
-<select id="resource" onchange="calc()">
-<option value="">-- اختر --</option>
-<option value="قمح" data-price="40">قمح (40 لكل مليار)</option>
-<option value="خشب" data-price="20">خشب (20 لكل مليار)</option>
-<option value="حديد" data-price="150">حديد (150 لكل مليار)</option>
-</select>
-
-<label>الكمية (بالمليار)</label>
-<input type="number" id="qty" min="1" value="1" onchange="calc()">
-
-<div class="price" id="total">السعر: 0</div>
-
-<h3>بيانات الحساب (وقت الشراء فقط)</h3>
-<label>IGG ID</label>
-<input type="text" id="igg">
-
-<label>Password</label>
-<input type="password" id="pass">
-
-<button onclick="order()">شراء الآن</button>
-</section>
-
-<section class="card">
-<h2>بوت النداء</h2>
-<p>سعر اشتراك شهر: <b>320</b></p>
-<button onclick="callBot()">شراء بوت النداء</button>
-</section>
-
-<section class="card">
-<h2>الدفع</h2>
-<p>إنستا باي: <b>01555823983</b></p>
-<p>فودافون كاش: <b>01016057623</b></p>
-</section>
-
-<a class="whatsapp" href="https://wa.me/20101657623" target="_blank">💬</a>
-
-<footer>
-© 2026 Al-Fateh Store
-</footer>
-
-<script>
-function calc(){
-let r=document.getElementById("resource");
-let price=r.options[r.selectedIndex]?.dataset.price||0;
-let qty=document.getElementById("qty").value;
-document.getElementById("total").innerText="السعر: "+(price*qty);
-}
-
-function order(){
-let r=document.getElementById("resource").value;
-let qty=document.getElementById("qty").value;
-let igg=document.getElementById("igg").value;
-let pass=document.getElementById("pass").value;
-let price=document.getElementById("total").innerText;
-
-if(!r||!igg||!pass){
-alert("من فضلك اكمل البيانات");
-return;
-}
-
-let msg=`طلب جديد:
-المورد: ${r}
-الكمية: ${qty} مليار
-${price}
-IGG: ${igg}
-Password: ${pass}`;
-
-window.open("https://wa.me/20101657623?text="+encodeURIComponent(msg));
-}
-
-function callBot(){
-window.open("https://wa.me/20101657623?text=طلب اشتراك بوت النداء شهر");
-}
-</script>
-
-</body>
-</html>
+<select id="resource" onchange="calcPrice()">
+<optio
