@@ -1,23 +1,181 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <title>Al-Fateh Store</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{margin:0;font-family:Arial;background:#0b0b0b;color:#fff}
-header{background:#000;padding:25px;text-align:center}
-header h1{color:gold;margin:0}
-nav{background:#111;padding:10px;text-align:center}
-nav a{color:gold;margin:0 10px;text-decoration:none;font-weight:bold}
-section{max-width:900px;margin:auto;padding:20px}
-.card{background:#151515;padding:20px;border-radius:12px;margin-bottom:20px}
-input,select,textarea{width:100%;padding:10px;margin-top:8px;border-radius:6px;border:none}
-button{margin-top:15px;padding:12px;width:100%;background:gold;border:none;font-size:17px;font-weight:bold;cursor:pointer;border-radius:8px}
-.price{margin-top:10px;font-size:20px;color:#00ff88}
-footer{background:#000;padding:15px;text-align:center;color:#777}
-.whatsapp{position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;padding:15px;border-radius:50%;text-decoration:none;font-size:20px}
+:root{
+  --bg:#0b0b0b;
+  --card:#151515;
+  --accent:#d4af37;
+  --green:#00ff88;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Tahoma,Arial;
+  background:var(--bg);
+  color:#fff;
+}
+
+/* ===== Header ===== */
+header{
+  background:linear-gradient(180deg,#000,#111);
+  padding:30px;
+  text-align:center;
+}
+header h1{margin:0;color:var(--accent)}
+header p{color:#aaa;font-size:14px}
+
+/* ===== Nav ===== */
+nav{
+  background:#0f0f0f;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  padding:12px;
+}
+nav a{
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:bold;
+  padding:6px 12px;
+  border-radius:6px;
+}
+nav a:hover{background:#222}
+
+/* ===== Layout ===== */
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:22px;
+  margin-bottom:22px;
+  box-shadow:0 0 20px rgba(0,0,0,.4);
+}
+
+/* ===== Resources ===== */
+.resources{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+}
+
+.resource-card{
+  background:#0f0f0f;
+  border:2px solid #222;
+  border-radius:16px;
+  padding:15px;
+  text-align:center;
+  cursor:pointer;
+  transition:.3s;
+  position:relative;
+}
+
+.resource-card img{
+  width:90px;
+  height:90px;
+  border-radius:14px;
+  object-fit:cover;
+  margin-bottom:10px;
+}
+
+.resource-card:hover{
+  transform:translateY(-6px);
+}
+
+.resource-card.active{
+  border-color:var(--accent);
+  box-shadow:0 0 20px rgba(212,175,55,.5);
+  animation:pulse .6s;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+
+/* ===== Form ===== */
+label{display:block;margin-top:15px;color:#ccc}
+input{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:8px;
+  border:none;
+  background:#0d0d0d;
+  color:#fff;
+}
+
+button{
+  margin-top:15px;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:var(--accent);
+  color:#000;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:hover{opacity:.9}
+
+/* ===== Cart ===== */
+.cart{
+  background:#101010;
+  border-radius:12px;
+  padding:15px;
+  margin-top:20px;
+}
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+  color:#ddd;
+}
+.cart-total{
+  margin-top:10px;
+  font-size:20px;
+  color:var(--green);
+  font-weight:bold;
+}
+
+/* ===== WhatsApp ===== */
+.whatsapp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:55px;
+  height:55px;
+  background:#25d366;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  border-radius:50%;
+  text-decoration:none;
+}
+
+/* ===== Footer ===== */
+footer{
+  background:#000;
+  text-align:center;
+  padding:15px;
+  color:#666;
+  font-size:13px;
+}
 </style>
 </head>
 
@@ -29,88 +187,134 @@ footer{background:#000;padding:15px;text-align:center;color:#777}
 </header>
 
 <nav>
-  <a href="index.html">🛒 المتجر</a>
-  <a href="forum.html">💬 المنتدى</a>
+  <a href="#">🛒 المتجر</a>
+  <a href="#">💬 المنتدى</a>
 </nav>
 
-<!-- المتجر -->
-<section class="card">
-<h2>شراء الموارد</h2>
+<div class="container">
 
-<label>اختر المورد</label>
-<select id="resource" onchange="calcPrice()">
-  <option value="">-- اختر --</option>
-  <option value="قمح" data-price="40">قمح (40 لكل مليار)</option>
-  <option value="خشب" data-price="20">خشب (20 لكل مليار)</option>
-  <option value="حديد" data-price="150">حديد (150 لكل مليار)</option>
-</select>
+<div class="card">
+<h2>🛒 شراء الموارد</h2>
+
+<div class="resources">
+
+  <div class="resource-card" onclick="selectResource('قمح',40,this)">
+    <img src="https://images.unsplash.com/photo-1504306663639-38a5fba7c7b5?w=200">
+    <h4>قمح</h4>
+    <p>40 لكل مليار</p>
+  </div>
+
+  <div class="resource-card" onclick="selectResource('خشب',20,this)">
+    <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=200">
+    <h4>خشب</h4>
+    <p>20 لكل مليار</p>
+  </div>
+
+  <div class="resource-card" onclick="selectResource('حديد',150,this)">
+    <img src="https://images.unsplash.com/photo-1581090700227-1e37b190418e?w=200">
+    <h4>حديد</h4>
+    <p>150 لكل مليار</p>
+  </div>
+
+</div>
 
 <label>الكمية (بالمليار)</label>
-<input type="number" id="qty" value="1" min="1" oninput="calcPrice()">
+<input type="number" id="qty" value="1" min="1">
 
-<div class="price" id="totalPrice">السعر: 0</div>
+<button onclick="addToCart()">➕ أضف إلى السلة</button>
 
-<h3>بيانات الحساب (تُطلب عند الشراء فقط)</h3>
-<input id="playerId" placeholder="ID">
-<input id="igg" placeholder="IGG">
-<input type="password" id="password" placeholder="Password">
+<div class="cart" id="cart">
+  <h3>🧺 سلة الشراء</h3>
+  <div id="cartItems"></div>
+  <div class="cart-total" id="cartTotal">الإجمالي: 0</div>
+</div>
 
-<button onclick="sendOrder()">شراء الآن</button>
-</section>
+<label>Player ID</label>
+<input id="playerId">
 
-<!-- بوت النداء -->
-<section class="card">
-<h2>بوت النداء</h2>
-<p>سعر الاشتراك الشهري: <b>320</b></p>
-<button onclick="callBot()">شراء بوت النداء</button>
-</section>
+<label>IGG</label>
+<input id="igg">
 
-<!-- الدفع -->
-<section class="card">
-<h2>طرق الدفع</h2>
-<p>إنستا باي: <b>01555823983</b></p>
-<p>فودافون كاش: <b>01016057623</b></p>
-</section>
+<label>Password</label>
+<input type="password" id="password">
+
+<button onclick="sendOrder()">📲 إتمام الطلب</button>
+</div>
+
+</div>
 
 <a class="whatsapp" href="https://wa.me/201016057623" target="_blank">💬</a>
 
 <footer>© 2026 Al-Fateh Store</footer>
 
 <script>
-/* ===== المتجر ===== */
-function calcPrice(){
-  let r=document.getElementById("resource");
-  let price=r.options[r.selectedIndex]?.dataset.price||0;
-  let q=document.getElementById("qty").value||0;
-  document.getElementById("totalPrice").innerText="السعر: "+(price*q);
+let selectedResource=null;
+let selectedPrice=0;
+let cart=[];
+
+function selectResource(name,price,el){
+  selectedResource=name;
+  selectedPrice=price;
+
+  document.querySelectorAll(".resource-card")
+    .forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
+}
+
+function addToCart(){
+  if(!selectedResource){
+    alert("اختر مورد أولاً");
+    return;
+  }
+  const q=qty.value;
+  cart.push({
+    name:selectedResource,
+    qty:q,
+    total:selectedPrice*q
+  });
+  renderCart();
+}
+
+function renderCart(){
+  let items="";
+  let total=0;
+  cart.forEach(i=>{
+    items+=`<div class="cart-item">
+      <span>${i.name} × ${i.qty}</span>
+      <span>${i.total}</span>
+    </div>`;
+    total+=i.total;
+  });
+  cartItems.innerHTML=items;
+  cartTotal.innerText="الإجمالي: "+total;
 }
 
 function sendOrder(){
-  let r=resource.value;
-  let q=qty.value;
-  let total=totalPrice.innerText;
-  let id=playerId.value;
-  let ig=igg.value;
-  let pass=password.value;
-
-  if(!r||!id||!ig||!pass){
-    alert("اكمل كل البيانات");
+  if(cart.length==0){
+    alert("السلة فارغة");
+    return;
+  }
+  if(!playerId.value||!igg.value||!password.value){
+    alert("اكمل بيانات الحساب");
     return;
   }
 
-  let msg=`طلب موارد جديد:
-المورد: ${r}
-الكمية: ${q} مليار
-${total}
-ID: ${id}
-IGG: ${ig}
-Password: ${pass}`;
+  let details="";
+  cart.forEach(i=>{
+    details+=`${i.name} × ${i.qty} = ${i.total}\n`;
+  });
 
-  window.open("https://wa.me/201016057623?text="+encodeURIComponent(msg));
-}
+  const msg=`🛒 طلب جديد
+${details}
+${cartTotal.innerText}
 
-function callBot(){
-  window.open("https://wa.me/201016057623?text=طلب اشتراك بوت النداء شهر");
+ID: ${playerId.value}
+IGG: ${igg.value}
+Password: ${password.value}`;
+
+  window.open(
+    "https://wa.me/201016057623?text="+encodeURIComponent(msg)
+  );
 }
 </script>
 
