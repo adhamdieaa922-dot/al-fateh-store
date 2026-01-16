@@ -22,7 +22,7 @@ body{
   color:#fff;
 }
 
-/* ===== Header ===== */
+/* Header */
 header{
   background:linear-gradient(180deg,#000,#111);
   padding:30px;
@@ -31,7 +31,7 @@ header{
 header h1{margin:0;color:var(--accent)}
 header p{color:#aaa;font-size:14px}
 
-/* ===== Nav ===== */
+/* Nav */
 nav{
   background:#0f0f0f;
   display:flex;
@@ -48,7 +48,7 @@ nav a{
 }
 nav a:hover{background:#222}
 
-/* ===== Layout ===== */
+/* Layout */
 .container{
   max-width:1000px;
   margin:auto;
@@ -63,7 +63,7 @@ nav a:hover{background:#222}
   box-shadow:0 0 20px rgba(0,0,0,.4);
 }
 
-/* ===== Resources ===== */
+/* Resources */
 .resources{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
@@ -78,14 +78,13 @@ nav a:hover{background:#222}
   text-align:center;
   cursor:pointer;
   transition:.3s;
-  position:relative;
 }
 
 .resource-card img{
-  width:90px;
-  height:90px;
-  border-radius:14px;
+  width:100%;
+  height:110px;
   object-fit:cover;
+  border-radius:12px;
   margin-bottom:10px;
 }
 
@@ -105,7 +104,7 @@ nav a:hover{background:#222}
   100%{transform:scale(1)}
 }
 
-/* ===== Form ===== */
+/* Form */
 label{display:block;margin-top:15px;color:#ccc}
 input{
   width:100%;
@@ -129,9 +128,8 @@ button{
   font-weight:bold;
   cursor:pointer;
 }
-button:hover{opacity:.9}
 
-/* ===== Cart ===== */
+/* Cart */
 .cart{
   background:#101010;
   border-radius:12px;
@@ -142,7 +140,6 @@ button:hover{opacity:.9}
   display:flex;
   justify-content:space-between;
   margin-bottom:8px;
-  color:#ddd;
 }
 .cart-total{
   margin-top:10px;
@@ -151,7 +148,7 @@ button:hover{opacity:.9}
   font-weight:bold;
 }
 
-/* ===== WhatsApp ===== */
+/* WhatsApp */
 .whatsapp{
   position:fixed;
   bottom:20px;
@@ -168,7 +165,7 @@ button:hover{opacity:.9}
   text-decoration:none;
 }
 
-/* ===== Footer ===== */
+/* Footer */
 footer{
   background:#000;
   text-align:center;
@@ -198,20 +195,23 @@ footer{
 
 <div class="resources">
 
+  <!-- قمح -->
   <div class="resource-card" onclick="selectResource('قمح',40,this)">
-    <img src="https://images.unsplash.com/photo-1504306663639-38a5fba7c7b5?w=200">
+    <img src="images/wheat.jpg">
     <h4>قمح</h4>
     <p>40 لكل مليار</p>
   </div>
 
+  <!-- خشب -->
   <div class="resource-card" onclick="selectResource('خشب',20,this)">
-    <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=200">
+    <img src="images/wood.jpg">
     <h4>خشب</h4>
     <p>20 لكل مليار</p>
   </div>
 
+  <!-- حديد -->
   <div class="resource-card" onclick="selectResource('حديد',150,this)">
-    <img src="https://images.unsplash.com/photo-1581090700227-1e37b190418e?w=200">
+    <img src="images/iron.jpg">
     <h4>حديد</h4>
     <p>150 لكل مليار</p>
   </div>
@@ -223,7 +223,7 @@ footer{
 
 <button onclick="addToCart()">➕ أضف إلى السلة</button>
 
-<div class="cart" id="cart">
+<div class="cart">
   <h3>🧺 سلة الشراء</h3>
   <div id="cartItems"></div>
   <div class="cart-total" id="cartTotal">الإجمالي: 0</div>
@@ -255,7 +255,6 @@ let cart=[];
 function selectResource(name,price,el){
   selectedResource=name;
   selectedPrice=price;
-
   document.querySelectorAll(".resource-card")
     .forEach(c=>c.classList.remove("active"));
   el.classList.add("active");
@@ -263,7 +262,7 @@ function selectResource(name,price,el){
 
 function addToCart(){
   if(!selectedResource){
-    alert("اختر مورد أولاً");
+    alert("اختار مورد الأول");
     return;
   }
   const q=qty.value;
@@ -276,16 +275,16 @@ function addToCart(){
 }
 
 function renderCart(){
-  let items="";
+  let html="";
   let total=0;
   cart.forEach(i=>{
-    items+=`<div class="cart-item">
+    html+=`<div class="cart-item">
       <span>${i.name} × ${i.qty}</span>
       <span>${i.total}</span>
     </div>`;
     total+=i.total;
   });
-  cartItems.innerHTML=items;
+  cartItems.innerHTML=html;
   cartTotal.innerText="الإجمالي: "+total;
 }
 
