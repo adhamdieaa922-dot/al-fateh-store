@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>منتدى Al-Fateh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<style>
+body{background:#0b0b0b;color:#fff;font-family:Arial;margin:0}
+.card{max-width:600px;margin:auto;background:#151515;padding:20px;border-radius:12px}
+input,textarea,button{width:100%;margin-top:10px;padding:10px;border-radius:6px;border:none}
+button{background:gold;font-weight:bold}
+.msg{background:#222;padding:8px;margin-top:8px;border-radius:6px}
+.name{color:#00ff88}
+.back{
+display:inline-block;
+margin:15px;
+padding:10px 18px;
+background:gold;
+color:#000;
+text-decoration:none;
+font-weight:bold;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<a href="index.html" class="back">⬅️ الرجوع إلى المتجر</a>
+
+<div class="card">
+<h2>منتدى التواصل</h2>
+
+<input id="name" placeholder="اسمك">
+<input id="kingdom" placeholder="رقم المملكة">
+<textarea id="message" placeholder="اكتب رسالتك"></textarea>
+<button onclick="send()">إرسال</button>
+
+<div id="chat"></div>
+</div>
+
+<script>
+var firebaseConfig = {
+  databaseURL: "https://al-fateh-store-default-rtdb.firebaseio.com/"
+};
+firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+
+function send(){
+  let name = document.getElementById("name").value;
+  let kingdom = document.getElementById("kingdom").value;
+  let msg = document.getElementById("message").value;
+
+  if(!name || !kingdom || !msg){
+    alert("املأ كل البيانات");
+    return;
+  }
+
+  db.ref("forum").push({
+    name:name,
+    kingdom:kingdom,
+    msg:msg
+  });
+
+  document.getElementById("message").value="";
+}
+
+db.ref("forum").on("child_added", function(snap){
+  let d = snap.val();
+  let div = document.createElement("div");
+  div.className="msg";
+  div.innerHTML = `<span class="name">${d.name} | K${d.kingdom}:</span> ${d.msg}`;
+  document.getElementById("chat").appendChild(div);
+});
+</script>
+
+</body>
+</html>
